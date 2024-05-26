@@ -7,4 +7,23 @@ layout:
 - go.kubebuilder.io/v4
 projectName: svn-operator
 repo: github.com/markzhang0928/svn-operator
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: zhangyi.chat
+  group: svn
+  kind: SVNServer
+  path: github.com/markzhang0928/svn-operator/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: zhangyi.chat
+  group: svn
+  kind: SVNRepository
+  path: github.com/markzhang0928/svn-operator/api/v1alpha1
+  version: v1alpha1
 version: "3"

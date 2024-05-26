@@ -1,0 +1,12 @@
+apiVersion: svn.zhangyi.chat/v1alpha1
+kind: SVNServer
+metadata:
+  labels:
+    app.kubernetes.io/name: svnserver
+    app.kubernetes.io/instance: svnserver-sample
+    app.kubernetes.io/part-of: svn-operator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: svn-operator
+  name: svnserver-sample
+spec:
+  # TODO(user): Add fields here

@@ -1,0 +1,27 @@
+# permissions for end users to view svnservers.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: svnserver-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: svn-operator
+    app.kubernetes.io/part-of: svn-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: svnserver-viewer-role
+rules:
+- apiGroups:
+  - svn.zhangyi.chat
+  resources:
+  - svnservers
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - svn.zhangyi.chat
+  resources:
+  - svnservers/status
+  verbs:
+  - get
