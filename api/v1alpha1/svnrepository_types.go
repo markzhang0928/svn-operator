@@ -25,23 +25,26 @@ import (
 
 // SVNRepositorySpec defines the desired state of SVNRepository
 type SVNRepositorySpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Pattern="^[a-zA-Z0-9][a-zA-Z0-9.-]*$"
 
-	// Foo is an example field of SVNRepository. Edit svnrepository_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// The name of the SVNServer
+	SVNServer string `json:"svnServer,omitempty"`
 }
 
 // SVNRepositoryStatus defines the observed state of SVNRepository
 type SVNRepositoryStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// +Kubebuilder:validation:Optional
+	Conditions []Condition `json:"conditions"`
 }
 
-//+kubebuilder:object:root=true
-//+kubebuilder:subresource:status
+// +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
 
 // SVNRepository is the Schema for the svnrepositories API
+//
+// The svn-operator does not delete actual repositories if SVNRepository resources are deleted. In such case, you can restore repositories by recreating SVNRepository resources.
+// Currently we do not provide methods to configure this behavior.
 type SVNRepository struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

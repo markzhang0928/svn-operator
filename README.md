@@ -1,8 +1,9 @@
 # svn-operator
-// TODO(user): Add simple overview of use/purpose
 
 ## Description
-// TODO(user): An in-depth paragraph about your project and overview of use
+** The Initial Version is forked from https://github.com/genkami/svn-operator.git ** 
+
+Cause it's been archived by the owner, so I've forked it and try to renovate and maintain it.
 
 ## Getting Started
 
@@ -16,7 +17,7 @@
 **Build and push your image to the location specified by `IMG`:**
 
 ```sh
-make docker-build docker-push IMG=<some-registry>/svn-operator:tag
+make docker-build docker-push IMG=zhangyi330700/svn-operator:tag
 ```
 
 **NOTE:** This image ought to be published in the personal registry you specified. 
@@ -32,7 +33,7 @@ make install
 **Deploy the Manager to the cluster with the image specified by `IMG`:**
 
 ```sh
-make deploy IMG=<some-registry>/svn-operator:tag
+make deploy IMG=zhangyi330700/svn-operator:tag
 ```
 
 > **NOTE**: If you encounter RBAC errors, you may need to grant yourself cluster-admin 
@@ -73,7 +74,7 @@ Following are the steps to build the installer and distribute this project to us
 1. Build the installer for the image built and published in the registry:
 
 ```sh
-make build-installer IMG=<some-registry>/svn-operator:tag
+make build-installer IMG=zhangyi330700/svn-operator:tag
 ```
 
 NOTE: The makefile target mentioned above generates an 'install.yaml'
@@ -86,7 +87,7 @@ its dependencies.
 Users can just run kubectl apply -f <URL for YAML BUNDLE> to install the project, i.e.:
 
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/<org>/svn-operator/<tag or branch>/dist/install.yaml
+kubectl apply -f https://raw.githubusercontent.com/markzhang0928/svn-operator/<tag or branch>/dist/install.yaml
 ```
 
 ## Contributing

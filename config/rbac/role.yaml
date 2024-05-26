@@ -1,15 +1,146 @@
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  labels:
-    app.kubernetes.io/name: clusterrole
-    app.kubernetes.io/instance: manager-role
-    app.kubernetes.io/component: rbac
-    app.kubernetes.io/created-by: svn-operator
-    app.kubernetes.io/part-of: svn-operator
-    app.kubernetes.io/managed-by: kustomize
   name: manager-role
 rules:
-- apiGroups: [""]
-  resources: ["pods"]
-  verbs: ["get", "list", "watch"]
+- apiGroups:
+  - apps
+  resources:
+  - statefulsets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - svn.zhangyi.chat
+  resources:
+  - svngroups
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - svn.zhangyi.chat
+  resources:
+  - svngroups/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - svn.zhangyi.chat
+  resources:
+  - svngroups/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - svn.zhangyi.chat
+  resources:
+  - svnrepositories
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - svn.zhangyi.chat
+  resources:
+  - svnrepositories/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - svn.zhangyi.chat
+  resources:
+  - svnrepositories/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - svn.zhangyi.chat
+  resources:
+  - svnservers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - svn.zhangyi.chat
+  resources:
+  - svnservers/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - svn.zhangyi.chat
+  resources:
+  - svnservers/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - svn.zhangyi.chat
+  resources:
+  - svnusers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - svn.zhangyi.chat
+  resources:
+  - svnusers/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - svn.zhangyi.chat
+  resources:
+  - svnusers/status
+  verbs:
+  - get
+  - patch
+  - update
