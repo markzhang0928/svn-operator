@@ -17,6 +17,7 @@ limitations under the License.
 package main
 
 import (
+	"context"
 	"crypto/tls"
 	"flag"
 	"os"
@@ -122,10 +123,11 @@ func main() {
 		os.Exit(1)
 	}
 
+	ctx := context.Background()
 	if err = (&controller.SVNServerReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
-	}).SetupWithManager(mgr); err != nil {
+	}).SetupWithManager(ctx, mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "SVNServer")
 		os.Exit(1)
 	}

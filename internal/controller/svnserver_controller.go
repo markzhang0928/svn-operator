@@ -36,7 +36,6 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/handler"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
-	"sigs.k8s.io/controller-runtime/pkg/source"
 )
 
 const (
@@ -93,10 +92,15 @@ type GeneratorFactory struct {
 // +kubebuilder:rbac:groups=core,resources=configmaps,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=core,resources=services,verbs=get;list;watch;create;update;patch;delete
 
-// Reconcile does the following things:
-//   - Creates StatefulSets for the SVN server.
-//   - Creates Headless Services for the StatefulSets.
-//   - Creates ConfigMaps that contain configuration files for Apache2 inside SVN server.
+// Reconcile is part of the main kubernetes reconciliation loop which aims to
+// move the current state of the cluster closer to the desired state.
+// TODO(user): Modify the Reconcile function to compare the state specified by
+// the SVNServer object against the actual cluster state, and then
+// perform operations to make the cluster state reflect the state specified by
+// the user.
+//
+// For more details, check Reconcile and its Result here:
+// - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.17.0/pkg/reconcile
 func (r *SVNServerReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := r.Log.WithValues("svnserver", req.NamespacedName)
 
@@ -595,16 +599,16 @@ func (r *SVNServerReconciler) SetupWithManager(ctx context.Context, mgr ctrl.Man
 	}
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&svnv1alpha1.SVNServer{}).
-		Watches(&source.Kind{Type: &svnv1alpha1.SVNRepository{}}, handler.EnqueueRequestsFromMapFunc(repositoryEnqueuer(mgr))).
-		Watches(&source.Kind{Type: &svnv1alpha1.SVNGroup{}}, handler.EnqueueRequestsFromMapFunc(groupEnqueuer(mgr))).
-		Watches(&source.Kind{Type: &svnv1alpha1.SVNUser{}}, handler.EnqueueRequestsFromMapFunc(userEnqueuer(mgr))).
+		Watches(&svnv1alpha1.SVNRepository{}, handler.EnqueueRequestsFromMapFunc(repositoryEnqueuer(mgr))).
+		Watches(&svnv1alpha1.SVNGroup{}, handler.EnqueueRequestsFromMapFunc(groupEnqueuer(mgr))).
+		Watches(&svnv1alpha1.SVNUser{}, handler.EnqueueRequestsFromMapFunc(userEnqueuer(mgr))).
 		Owns(&appsv1.StatefulSet{}).
 		Owns(&corev1.ConfigMap{}).
 		Complete(r)
 }
 
 func repositoryEnqueuer(mgr ctrl.Manager) handler.MapFunc {
-	return func(obj client.Object) []reconcile.Request {
+	return func(ctx context.Context, obj client.Object) []reconcile.Request {
 		svn, ok := obj.(*svnv1alpha1.SVNRepository)
 		if !ok {
 			mgr.GetLogger().Info("Not an SVNRepository", "object", obj)
@@ -620,7 +624,7 @@ func repositoryEnqueuer(mgr ctrl.Manager) handler.MapFunc {
 }
 
 func groupEnqueuer(mgr ctrl.Manager) handler.MapFunc {
-	return func(obj client.Object) []reconcile.Request {
+	return func(ctx context.Context, obj client.Object) []reconcile.Request {
 		svn, ok := obj.(*svnv1alpha1.SVNGroup)
 		if !ok {
 			mgr.GetLogger().Info("Not an SVNGroup", "object", obj)
@@ -636,7 +640,7 @@ func groupEnqueuer(mgr ctrl.Manager) handler.MapFunc {
 }
 
 func userEnqueuer(mgr ctrl.Manager) handler.MapFunc {
-	return func(obj client.Object) []reconcile.Request {
+	return func(ctx context.Context, obj client.Object) []reconcile.Request {
 		svn, ok := obj.(*svnv1alpha1.SVNUser)
 		if !ok {
 			mgr.GetLogger().Info("Not an SVNUser", "object", obj)
