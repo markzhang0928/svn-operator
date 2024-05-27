@@ -9,4 +9,4 @@ metadata:
     app.kubernetes.io/created-by: svn-operator
   name: svnrepository-sample
 spec:
-  svnServer: svnserver-sample
+  # TODO(user): Add fields here
