@@ -59,7 +59,7 @@ type GroupRef struct {
 
 // SVNUserStatus defines the observed state of SVNUser
 type SVNUserStatus struct {
-	// +Kubebuilder:validation:Optional
+	// +kubebuilder:validation:Optional
 	Conditions []Condition `json:"conditions"`
 }
 

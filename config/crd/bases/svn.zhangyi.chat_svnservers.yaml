@@ -40,10 +40,7 @@ spec:
             description: SVNServerSpec defines the desired state of SVNServer
             properties:
               podTemplate:
-                description: |-
-                  INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-                  Important: Run "make" to regenerate code after modifying this file
-                  PodTemplate is a template to create Pods.
+                description: PodTemplate is a template to create Pods.
                 properties:
                   affinity:
                     description: If specified, the pod's scheduling constraints
@@ -1416,9 +1413,6 @@ spec:
             description: SVNServerStatus defines the observed state of SVNServer
             properties:
               conditions:
-                description: |-
-                  INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-                  Important: Run "make" to regenerate code after modifying this file
                 items:
                   properties:
                     reason:

@@ -22,6 +22,7 @@ import (
 	"flag"
 	"os"
 
+	"github.com/markzhang0928/svn-operator/controllers"
 	// Import all Kubernetes client auth plugins (e.g. Azure, GCP, OIDC, etc.)
 	// to ensure that exec-entrypoint and run can make use of them.
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
@@ -36,7 +37,6 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
 
 	svnv1alpha1 "github.com/markzhang0928/svn-operator/api/v1alpha1"
-	"github.com/markzhang0928/svn-operator/internal/controller"
 	//+kubebuilder:scaffold:imports
 )
 
@@ -124,7 +124,7 @@ func main() {
 	}
 
 	ctx := context.Background()
-	if err = (&controller.SVNServerReconciler{
+	if err = (&controllers.SVNServerReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(ctx, mgr); err != nil {

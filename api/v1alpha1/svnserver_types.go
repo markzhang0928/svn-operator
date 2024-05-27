@@ -26,11 +26,10 @@ import (
 
 // SVNServerSpec defines the desired state of SVNServer
 type SVNServerSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
 	// +kubebuilder:validation:Required
 	// PodTemplate is a template to create Pods.
 	PodTemplate PodTemplate `json:"podTemplate,omitempty"`
+
 	// +kubebuilder:validation:Required
 	// VolumeClaimTemplate is a PVC to store SVN repositories and configuration files in.
 	VolumeClaimTemplate corev1.PersistentVolumeClaim `json:"volumeClaimTemplate,omitempty"`
@@ -71,14 +70,6 @@ type PodTemplate struct {
 	Tolerations []corev1.Toleration `json:"tolerations,omitempty"`
 }
 
-// SVNServerStatus defines the observed state of SVNServer
-type SVNServerStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-	// +kubebuilder:validation:Optional
-	Conditions []Condition `json:"conditions"`
-}
-
 type Condition struct {
 	Type ConditionType `json:"type"`
 
@@ -95,6 +86,12 @@ const (
 	ConditionTypeSynced ConditionType = "Synced"
 	ConditionTypeFailed ConditionType = "Failed"
 )
+
+// SVNServerStatus defines the observed state of SVNServer
+type SVNServerStatus struct {
+	// +kubebuilder:validation:Optional
+	Conditions []Condition `json:"conditions"`
+}
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
